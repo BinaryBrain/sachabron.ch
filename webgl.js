@@ -144,10 +144,27 @@ function generateHeightMap() {
 	return terrainVertices;
 }
 
+function getHeightMap(planeMesh) {
+	return planeMesh.geometry.vertices;
+}
+
 function applyHeightMap(planeMesh, heightMap) {
 	delete planeMesh.geometry.__directGeometry;
 	planeMesh.geometry.vertices = heightMap.slice();
 	planeMesh.geometry.verticesNeedUpdate = true;
+}
+
+function changeHeightMap(timestamp, totalTime, startHeight, endHeight) {
+	var currentHeight = [];
+
+	for (var i = 0, len = startHeight.length; i < len; i++) {
+		currentHeight[i] = {};
+		currentHeight[i].z = endHeight[i].z * (timestamp / totalTime) + startHeight[i].z * (1 - (timestamp / totalTime));
+		currentHeight[i].x = endHeight[i].x * (timestamp / totalTime) + startHeight[i].x * (1 - (timestamp / totalTime));
+		currentHeight[i].y = endHeight[i].y * (timestamp / totalTime) + startHeight[i].y * (1 - (timestamp / totalTime));
+	}
+
+	applyHeightMap(planeMesh, currentHeight);
 }
 
 // Terrain params
@@ -180,8 +197,8 @@ function createText(font) {
 	textMesh.geometry.center();
 
 	composer.render();
-	// renderer.clear();
-	// renderer.render(scene, camera);
+	renderer.clear();
+	renderer.render(scene, camera);
 
 	scene.add(textMesh);
 
@@ -190,6 +207,9 @@ function createText(font) {
 
 var doIt = true;
 var f = 0;
+var newHeightMap = generateHeightMap();
+var oldHeightMap = getHeightMap(planeMesh);
+
 function animate(timestamp) {
 	requestAnimationFrame(animate);
 
@@ -202,14 +222,18 @@ function animate(timestamp) {
 	}
 	*/
 
-	if (timestamp > 1000 && doIt) {
-		doIt = false;
-		var heightMap = generateHeightMap();
-		applyHeightMap(planeMesh, heightMap);
+	if (timestamp > 2000 && timestamp < 3000) {
+		changeHeightMap(timestamp - 2000, 1000, oldHeightMap, newHeightMap);
 	}
 
+//	if (timestamp > 1000 && doIt) {
+//		doIt = false;
+//		var heightMap = generateHeightMap();
+//		applyHeightMap(planeMesh, heightMap);
+//	}
+
 	// textMesh.rotation.x += 0.01 * Math.PI;
-	// terrain.rotation.z += 0.01 * Math.PI;	
+	// terrain.rotation.z += 0.01 * Math.PI;
 	
 	composer.render();
 	//renderer.render(scene, camera);
@@ -220,12 +244,14 @@ window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
+	
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	composer.setSize( windowHalfX, windowHalfY );
+	
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	composer.setSize(window.innerWidth, window.innerHeight);
 
 	composer.render();
-//	renderer.setSize(window.innerWidth, window.innerHeight);
-//	renderer.render(scene, camera);
+	// renderer.setSize(window.innerWidth, window.innerHeight);
+	// renderer.render(scene, camera);
 }
