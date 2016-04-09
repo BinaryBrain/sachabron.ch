@@ -62,6 +62,7 @@ function createText(font) {
 }
 
 var doIt = true;
+setInterval(function () { terrain.changeHeightMap(800) }, 2000)
 function animate(timestamp) {
 	requestAnimationFrame(animate);
 
@@ -74,17 +75,9 @@ function animate(timestamp) {
 	}
 	*/
 
-	if (timestamp > 2000 && doIt) {
+	if (timestamp > 1000 && doIt) {
 		doIt = false;
-		terrain.changeHeightMap(1000);
 	}
-
-
-//	if (timestamp > 1000 && doIt) {
-//		doIt = false;
-//		var heightMap = generateHeightMap();
-//		applyHeightMap(planeMesh, heightMap);
-//	}
 
 	// textMesh.rotation.x += 0.01 * Math.PI;
 	// terrain.object.rotation.z += 0.01 * Math.PI;
