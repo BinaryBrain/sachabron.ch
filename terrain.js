@@ -17,8 +17,10 @@ var Terrain = function (size, exp, initHeight, roughness) {
 	var planeGeom = new THREE.PlaneGeometry(size, size, this.nbNodes - 1, this.nbNodes - 1);
 	var planeMatWireframe = new THREE.MeshBasicMaterial({ color: 0x999999, side: THREE.DoubleSide, wireframe: true });
 	
-	new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide })
-	var planeMat = new THREE.MeshPhongMaterial({ color: 0x000000, shading: THREE.FlatShading })
+	var planeMat = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide })
+	// var planeMat = new THREE.MeshPhongMaterial({ color: 0x111111, shading: THREE.FlatShading })
+	// var planeMat = new THREE.MeshPhongMaterial({ color: 0x111111 })
+	// var planeMat = new THREE.MeshLambertMaterial({ color: 0xffffff, fog: false })
 	
 	var planeMeshWireframe = new THREE.Mesh(planeGeom, planeMatWireframe);
 	var planeMesh = new THREE.Mesh(planeGeom, planeMat);

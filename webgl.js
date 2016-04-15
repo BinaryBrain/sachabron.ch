@@ -17,6 +17,13 @@ var pointLight = new THREE.PointLight(0xffffff, 1.5);
 pointLight.position.set(70, -200, 500);
 scene.add(pointLight);
 
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(10, 10, 1);
+// scene.add(directionalLight);
+
+var hemiLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+// scene.add(hemiLight);
+
 var textGeometry, textMesh;
 
 var mat = new THREE.MultiMaterial([
@@ -61,8 +68,8 @@ function createText(font) {
 	animate();
 }
 
-var doIt = true;
-setInterval(function () { terrain.changeHeightMap(800) }, 2000)
+var changeTerrain = false;
+
 function animate(timestamp) {
 	requestAnimationFrame(animate);
 
@@ -75,14 +82,16 @@ function animate(timestamp) {
 	}
 	*/
 
-	if (timestamp > 1000 && doIt) {
-		doIt = false;
+	if (changeTerrain) {
+		changeTerrain = false;
+		terrain.changeHeightMap(800);
 	}
+	
+	terrain.animate(timestamp);
 
 	// textMesh.rotation.x += 0.01 * Math.PI;
 	// terrain.object.rotation.z += 0.01 * Math.PI;
 	
-	terrain.animate(timestamp);
 	composer.render();
 	//renderer.render(scene, camera);
 }
@@ -103,3 +112,9 @@ function onWindowResize() {
 	// renderer.setSize(window.innerWidth, window.innerHeight);
 	// renderer.render(scene, camera);
 }
+
+[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
+	elem.addEventListener('click', (event) => {
+		changeTerrain = true;
+	})
+})
