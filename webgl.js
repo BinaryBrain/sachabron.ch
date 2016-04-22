@@ -90,8 +90,8 @@ function animate(timestamp) {
 	terrain.animate(timestamp);
 
 	// textMesh.rotation.x += 0.01 * Math.PI;
-	// terrain.object.rotation.z += 0.01 * Math.PI;
-	
+	//terrain.object.rotation.z += 0.01 * Math.PI;
+
 	composer.render();
 	//renderer.render(scene, camera);
 }

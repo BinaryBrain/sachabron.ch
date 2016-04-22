@@ -185,35 +185,9 @@ Terrain.prototype.changeHeightMapEasingTick = function (timestamp, startTime, du
 	var timeRatio = (timestamp - startTime) / (duration);
 
 	// t: current time, b: begInnIng value, c: change In value, d: duration
-	/*
-	function ease (x, t, b, c, d) {
-		if ((t/=d/2) < 1) return c/2*t*t*t + b;
-		return c/2*((t-=2)*t*t + 2) + b;
-	}
-	*/
-	/*
-	function ease (x, t, b, c, d) {
-		if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
-		return c/2*((t-=2)*t*t*t*t + 2) + b;
-	}
-	*/
 	function ease (x, t, b, c, d) {
 		return -c * ((t=t/d-1)*t*t*t - 1) + b;
-		// return c*((t=t/d-1)*t*t*t*t + 1) + b;
 	}
-	/*
-	function ease (x, t, b, c, d) {
-		if ((t/=d) < (1/2.75)) {
-			return c*(7.5625*t*t) + b;
-		} else if (t < (2/2.75)) {
-			return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
-		} else if (t < (2.5/2.75)) {
-			return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
-		} else {
-			return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
-		}
-	}
-	*/
 
 	if (timeRatio > 1) {
 		this.animation.requestNewHeightMap = false;
@@ -240,15 +214,6 @@ Terrain.prototype.changeHeightMapSwipeTick = function (timestamp, startTime, dur
 		return;
 	}
 
-	/*
-	for (var i = startHeight.length - 1, len = Math.floor(startHeight.length * (1 - timeRatio)); i >= len; i--) {
-		//console.log(i)
-		currentHeight[i].z = endHeight[i].z;
-		currentHeight[i].x = endHeight[i].x;
-		currentHeight[i].y = endHeight[i].y;
-	}
-	*/
-
 	var side = Math.sqrt(startHeight.length);
 
 	for (var i = 0, len = Math.ceil(side * timeRatio); i < len; i++) {
@@ -266,7 +231,7 @@ Terrain.prototype.animate = function(timestamp) {
 	this.animation.timestamp = timestamp;
 
 	if (this.animation.requestNewHeightMap) {
-		terrain.changeHeightMapEasingTick(timestamp, this.animation.startTime, this.animation.duration, this.animation.oldHeightMap, this.animation.newHeightMap);
+		this.changeHeightMapEasingTick(timestamp, this.animation.startTime, this.animation.duration, this.animation.oldHeightMap, this.animation.newHeightMap);
 	}
 }
 
