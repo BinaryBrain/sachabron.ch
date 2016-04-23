@@ -77,7 +77,7 @@ var terrainDuration = 800;
 
 function animate(timestamp) {
 	requestAnimationFrame(animate);
-	
+
 	if (glitch) {
 		glitchTime = timestamp;
 		glitch = false;
@@ -91,7 +91,12 @@ function animate(timestamp) {
 		rgbShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, 0.05, -0.05, glithDuration);
 		rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 	} else {
-		rgbShiftEffect.uniforms['amount'].value = 0;
+		if (Math.random() < 0.02) {
+			rgbShiftEffect.uniforms['amount'].value = Math.random() * 0.02;
+			rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
+		} else {
+			rgbShiftEffect.uniforms['amount'].value = 0;
+		}
 	}
 	
 	if (changeTerrain) {

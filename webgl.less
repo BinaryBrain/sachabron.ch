@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Inconsolata|Roboto+Mono|Droid+Sans+Mono|PT+Mono);
+@import url(font/socicon/styles.css);
 
 * {
 	margin: 0;
@@ -20,10 +21,15 @@ body {
 	color: white;
 }
 
+a {
+	color: white;
+}
+
 nav {
+	padding: 20px;
 	.link {
 		float: left;
-		margin-left: 50px;
+		margin-right: 50px;
 
 		a {
 			color: white;
@@ -46,4 +52,24 @@ canvas {
 	right: 0;
 	background-color: black;
 	z-index: -1;
+}
+
+#container {
+	padding: 20px;
+}
+
+#contact {
+	li {
+		line-height: 35px;
+
+		[class^="socicon-"], [class*=" socicon-"] {
+			font-size: 30px;
+			padding-right: 10px;
+			vertical-align: text-top;
+		}
+	}
+}
+
+.no-bullet {
+	list-style-type: none;
 }
