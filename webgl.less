@@ -1,8 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Inconsolata|Roboto+Mono|Droid+Sans+Mono|PT+Mono);
+
 * {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	box-sizing: border-box;
+
+	font-family: 'Inconsolata', ;
+	font-family: 'Roboto Mono', ;
+	font-family: 'Droid Sans Mono', ;
+	font-family: 'PT Mono', ;
 }
 
 body {
@@ -14,9 +21,20 @@ body {
 }
 
 nav {
-	a {
-		color: white;
-		text-decoration: none;
+	.link {
+		float: left;
+		margin-left: 50px;
+
+		a {
+			color: white;
+			text-decoration: none;
+		}
+	}
+
+	&:after {
+		content: ' ';
+		display: block;
+		clear: both;
 	}
 }
 

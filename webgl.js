@@ -69,22 +69,34 @@ function createText(font) {
 }
 
 var changeTerrain = false;
+var glitch = false;
+var glitchTime;
+
+var glithDuration = 400;
+var terrainDuration = 800;
 
 function animate(timestamp) {
 	requestAnimationFrame(animate);
+	
+	if (glitch) {
+		glitchTime = timestamp;
+		glitch = false;
+	}
+	if (timestamp - glitchTime < glithDuration) {
+		// t: current time, b: begInnIng value, c: change In value, d: duration
+		function ease (x, t, b, c, d) {
+			return -c * ((t=t/d-1)*t*t*t - 1) + b;
+		}
 
-	/*
-	if (Math.random() < 0.02) {
-		rgbShiftEffect.uniforms['amount'].value = Math.random() * 0.02;
+		rgbShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, 0.05, -0.05, glithDuration);
 		rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 	} else {
 		rgbShiftEffect.uniforms['amount'].value = 0;
 	}
-	*/
-
+	
 	if (changeTerrain) {
 		changeTerrain = false;
-		terrain.changeHeightMap(800);
+		terrain.changeHeightMap(terrainDuration);
 	}
 	
 	terrain.animate(timestamp);
@@ -116,5 +128,17 @@ function onWindowResize() {
 [].forEach.call(document.querySelectorAll('nav a'), (elem) => {
 	elem.addEventListener('click', (event) => {
 		changeTerrain = true;
+		glitch = true;
+
+		fetch('pages/' + elem.getAttribute('href').substring(1) + '.html', { mode: 'cors' })  
+		.then(function(response) {
+			return response.text();
+		})
+		.then(function(text) {
+			document.querySelector('#container').innerHTML = text;
+		})
+		.catch(function(error) {
+			console.error('Request failed', error)
+		})
 	})
 })
