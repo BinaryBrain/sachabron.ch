@@ -15,14 +15,17 @@ function addSpans() {
 			// Type 3 is a Text Node
 			if (nodes[i].nodeType === 3) {
 				var text = nodes[i].textContent;
+				if (/\S/.test(text)) {
+					var span = document.createElement("span");
+					span.setAttribute('class', 'text');
 
-				var span = document.createElement("span");
-				span.setAttribute('class', 'text');
+					nodes[i].parentNode.replaceChild(span, nodes[i]);
 
-				nodes[i].parentNode.replaceChild(span, nodes[i]);
+					console.log('text:', text);
 
-				var newTextNode = document.createTextNode(text);
-				span.appendChild(newTextNode);
+					var newTextNode = document.createTextNode(text);
+					span.appendChild(newTextNode);
+				}
 			} else {
 				dfs(nodes[i].childNodes)
 			}
