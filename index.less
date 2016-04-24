@@ -68,11 +68,22 @@ p {
 	left: 0;
 	overflow: auto;
 
+	@backgroundColor: #111111;
+
 	.text {
-		@backgroundColor: #111111;
 		background: @backgroundColor;
 		box-shadow: 10px 0 @backgroundColor;
 		// TODO find a way to have a left shadow without going over previous elements
+	}
+
+	// Exceptions
+	pre, textarea, table {
+		background: @backgroundColor;
+
+		.text {
+			background: none;
+			box-shadow: none;
+		}
 	}
 }
 
