@@ -1,19 +1,93 @@
-@import url(font/brownie.css);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata|Roboto+Mono|Droid+Sans+Mono|PT+Mono);
+@import url(font/socicon/styles.css);
 
 * {
-	padding: 0;
 	margin: 0;
+	padding: 0;
 	border: 0;
+	box-sizing: border-box;
+
+	font-family: 'Inconsolata', ;
+	font-family: 'Roboto Mono', ;
+	font-family: 'Droid Sans Mono', ;
+	font-family: 'PT Mono', ;
 }
 
-#coming-soon {
+body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+
+	color: white;
+}
+
+a {
+	color: white;
+}
+
+nav {
+	padding: 20px;
+	.link {
+		float: left;
+		margin-right: 50px;
+
+		a {
+			color: white;
+			text-decoration: none;
+		}
+	}
+
+	&:after {
+		content: ' ';
+		display: block;
+		clear: both;
+	}
+}
+
+canvas {
 	position: absolute;
+	top: 0;
+	bottom: 0;
 	left: 0;
 	right: 0;
-	top: 40%;
+	background-color: black;
+	z-index: -1;
+}
 
-	font-family: 'Brownie', sans-serif;
-	font-weight: 200;
-	font-size: 100px;
-	text-align: center;
+p {
+	margin: 10px 0; 
+}
+
+#container {
+	position: absolute;
+	right: -100px;
+	padding: 20px;
+	padding-right: 120px;
+	top: 50px;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+
+	.text {
+		@backgroundColor: #111111;
+		background: @backgroundColor;
+		box-shadow: 10px 0 @backgroundColor;
+		// TODO find a way to have a left shadow without going over previous elements
+	}
+}
+
+#contact {
+	li {
+		line-height: 35px;
+
+		[class^="socicon-"], [class*=" socicon-"] {
+			font-size: 30px;
+			padding-right: 10px;
+			vertical-align: text-top;
+		}
+	}
+}
+
+.no-bullet {
+	list-style-type: none;
 }

@@ -13,15 +13,13 @@ function addSpans() {
 	function dfs(nodes) {
 		for (var i = 0; i < nodes.length; i++) {
 			// Type 3 is a Text Node
-			if (nodes[i].nodeType === 3) {
+			if (nodes[i].nodeType === 3 && nodes[i].parentNode.tagName.toLowerCase() !== 'script') {
 				var text = nodes[i].textContent;
 				if (/\S/.test(text)) {
 					var span = document.createElement("span");
 					span.setAttribute('class', 'text');
 
 					nodes[i].parentNode.replaceChild(span, nodes[i]);
-
-					console.log('text:', text);
 
 					var newTextNode = document.createTextNode(text);
 					span.appendChild(newTextNode);
@@ -30,6 +28,23 @@ function addSpans() {
 				dfs(nodes[i].childNodes)
 			}
 		}
+	}
+
+	// Re-add script tags so they are eval
+	var scripts = document.querySelectorAll('#container script');
+	for (var i = 0; i < scripts.length; i++) {
+		var newScript = document.createElement('script');
+		var src = scripts[i].getAttribute('src');
+
+		if (src && src != '') {
+			newScript.src = scripts[i].src;
+		} else {
+			newScript.appendChild(scripts[i].childNodes[0]);
+		}
+
+		scripts[i].parentNode.removeChild(scripts[i]);
+
+		container.appendChild(newScript);
 	}
 }
 

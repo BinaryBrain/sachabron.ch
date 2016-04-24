@@ -8,8 +8,33 @@
 		<link rel="stylesheet/less" type="text/css" href="index.less" />
 	</head>
 	<body>
-		<div id="coming-soon">Coming Soon</div>
-		<script src="script/lib/jquery.js"></script>
+		<nav>
+			<div class="link"><a href="#whoami">Who Am I</a></div>
+			<div class="link"><a href="#programs">Programs</a></div>
+			<div class="link"><a href="#web">Web</a></div>
+			<div class="link"><a href="#photos">Photos</a></div>
+			<div class="link"><a href="#contact">Contact</a></div>
+		</nav>
+
+		<div id="container"></div>
+
+		<script src="script/lib/fetch.js"></script>
 		<script src="script/lib/less.js"></script>
+		<script src="script/lib/three.js"></script>
+
+		<!-- Composer -->
+		<script src="script/lib/CopyShader.js"></script>
+		<script src="script/lib/EffectComposer.js"></script>
+		<script src="script/lib/MaskPass.js"></script>
+		<script src="script/lib/RenderPass.js"></script>
+		<script src="script/lib/ShaderPass.js"></script>
+
+		<!-- RGB Shift -->
+		<script src="script/lib/RGBShiftShader.js"></script>
+
+		<script src="script/main.js"></script>
+		<script src="script/terrain.js"></script>
+		<script src="script/webgl.js"></script>
+		<script src="script/github-readme-getter.js"></script>
 	</body>
 </html>

@@ -130,6 +130,7 @@ function onWindowResize() {
 	// renderer.render(scene, camera);
 }
 
+// TODO Move this to main.js
 [].forEach.call(document.querySelectorAll('nav a'), (elem) => {
 	elem.addEventListener('click', (event) => {
 		changeTerrain = true;
