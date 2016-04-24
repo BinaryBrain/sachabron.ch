@@ -141,6 +141,7 @@ function onWindowResize() {
 		})
 		.then(function(text) {
 			document.querySelector('#container').innerHTML = text;
+			addSpans();
 		})
 		.catch(function(error) {
 			console.error('Request failed', error)
