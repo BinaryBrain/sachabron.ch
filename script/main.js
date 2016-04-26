@@ -1,6 +1,31 @@
 document.addEventListener("load", function () {
 	addSpans()
-});
+})
+
+// TODO Move this to main.js
+;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
+	elem.addEventListener('click', (event) => {
+		event.preventDefault();
+		glitch = true;
+
+		var pageName = elem.getAttribute('href').substring(1);
+
+		fetch('pages/' + pageName + '.html', { mode: 'cors' })  
+		.then(function(response) {
+			return response.text();
+		})
+		.then(function(text) {
+			changeTerrain = true;
+
+			history.replaceState('rewrite', '', '#!/' + pageName);
+			document.querySelector('#container').innerHTML = text;
+			addSpans();
+		})
+		.catch(function(error) {
+			console.error('Request failed', error)
+		})
+	})
+})
 
 /**
   * This function will surround every single text node in the DOM with some <span class="text"></span>
@@ -9,7 +34,7 @@ document.addEventListener("load", function () {
 function addSpans() {
 	var container = document.querySelector('#container');
 	dfs(container.childNodes);
-	
+
 	function dfs(nodes) {
 		for (var i = 0; i < nodes.length; i++) {
 			// Type 3 is a Text Node

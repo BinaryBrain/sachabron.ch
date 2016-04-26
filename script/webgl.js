@@ -129,23 +129,3 @@ function onWindowResize() {
 	// renderer.setSize(window.innerWidth, window.innerHeight);
 	// renderer.render(scene, camera);
 }
-
-// TODO Move this to main.js
-[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
-	elem.addEventListener('click', (event) => {
-		changeTerrain = true;
-		glitch = true;
-
-		fetch('pages/' + elem.getAttribute('href').substring(1) + '.html', { mode: 'cors' })  
-		.then(function(response) {
-			return response.text();
-		})
-		.then(function(text) {
-			document.querySelector('#container').innerHTML = text;
-			addSpans();
-		})
-		.catch(function(error) {
-			console.error('Request failed', error)
-		})
-	})
-})
