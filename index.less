@@ -1,16 +1,14 @@
-@import url(https://fonts.googleapis.com/css?family=Inconsolata|Roboto+Mono|Droid+Sans+Mono|PT+Mono);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono|Droid+Sans+Mono|PT+Mono);
 @import url(font/socicon/styles.css);
+@import url(font/Aileron/style.css);
+@import url(font/Brownie/brownie.css);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab|Bitter:400,400italic|Crete+Round:400,400italic);
 
 * {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	box-sizing: border-box;
-
-	font-family: 'Inconsolata', ;
-	font-family: 'Roboto Mono', ;
-	font-family: 'Droid Sans Mono', ;
-	font-family: 'PT Mono', ;
 }
 
 body {
@@ -19,6 +17,28 @@ body {
 	overflow: hidden;
 
 	color: white;
+
+	font-family: 'Roboto Mono', monospace;
+	font-family: 'Droid Sans Mono', monospace;
+	font-family: 'Roboto Slab', serif;
+	font-family: 'Bitter', serif;
+	font-family: 'Crete Round', serif;
+	font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Aileron', sans;
+	font-family: 'Brownie', sans;
+	font-weight: 300;
+}
+
+h1 {
+	font-size: 50px;
+
+	.text {
+		background: none;
+		box-shadow: none;
+	}
 }
 
 a {
@@ -27,6 +47,9 @@ a {
 
 nav {
 	padding: 20px;
+
+	font-family: 'PT Mono', monospace;
+
 	.link {
 		float: left;
 		margin-right: 50px;
@@ -58,6 +81,28 @@ p {
 	margin: 10px 0; 
 }
 
+pre {
+	font-family: 'Droid Sans Mono', monospace;
+}
+
+@backgroundColor: #111111;
+
+.text {
+	background: @backgroundColor;
+	box-shadow: 10px 0 @backgroundColor;
+	// TODO find a way to have a left shadow without going over previous elements
+}
+
+// Exceptions
+pre, textarea, table {
+	background: @backgroundColor;
+
+	.text {
+		background: none;
+		box-shadow: none;
+	}
+}
+
 #container {
 	position: absolute;
 	right: -100px;
@@ -67,24 +112,6 @@ p {
 	bottom: 0;
 	left: 0;
 	overflow: auto;
-
-	@backgroundColor: #111111;
-
-	.text {
-		background: @backgroundColor;
-		box-shadow: 10px 0 @backgroundColor;
-		// TODO find a way to have a left shadow without going over previous elements
-	}
-
-	// Exceptions
-	pre, textarea, table {
-		background: @backgroundColor;
-
-		.text {
-			background: none;
-			box-shadow: none;
-		}
-	}
 }
 
 #contact {
@@ -97,6 +124,10 @@ p {
 			vertical-align: text-top;
 		}
 	}
+}
+
+.anchor {
+	display: none;
 }
 
 .no-bullet {

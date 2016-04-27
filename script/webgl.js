@@ -92,8 +92,8 @@ function animate(timestamp) {
 		rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 	} else {
 		if (Math.random() < 0.02) {
-			rgbShiftEffect.uniforms['amount'].value = Math.random() * 0.02;
-			rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
+			// rgbShiftEffect.uniforms['amount'].value = Math.random() * 0.02;
+			// rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 		} else {
 			rgbShiftEffect.uniforms['amount'].value = 0;
 		}
