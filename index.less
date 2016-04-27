@@ -11,6 +11,12 @@
 	box-sizing: border-box;
 }
 
+.background-gradiant {
+	// background: radial-gradient(farthest-side at 98% 0px ,#63569A,#9a5670);
+	background: radial-gradient(farthest-side at 98% 0px, #2c2256, #582f3f);
+    background-attachment: fixed;
+}
+
 body {
 	width: 100%;
 	height: 100%;
@@ -34,11 +40,14 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
 	font-size: 50px;
+}
 
-	.text {
-		background: none;
-		box-shadow: none;
-	}
+h2 {
+	font-size: 35px;
+}
+
+h3 {
+	font-size: 25px;
 }
 
 a {
@@ -73,7 +82,7 @@ canvas {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: black;
+	.background-gradiant;
 	z-index: -1;
 }
 
@@ -83,19 +92,23 @@ p {
 
 pre {
 	font-family: 'Droid Sans Mono', monospace;
+	border: 1px solid white;
 }
 
 @backgroundColor: #111111;
 
+
 .text {
-	background: @backgroundColor;
-	box-shadow: 10px 0 @backgroundColor;
+	// background: @backgroundColor;
+	// box-shadow: 10px 0 @backgroundColor;
 	// TODO find a way to have a left shadow without going over previous elements
+	.background-gradiant;
 }
 
 // Exceptions
 pre, textarea, table {
-	background: @backgroundColor;
+	// background: @backgroundColor;
+	.background-gradiant;
 
 	.text {
 		background: none;

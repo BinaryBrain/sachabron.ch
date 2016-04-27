@@ -1,8 +1,11 @@
+var USE_COMPOSER = true;
+
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
-var renderer = new THREE.WebGLRenderer({ antialias: true });
+var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0xffffff, 0);
 document.body.appendChild(renderer.domElement);
 
 // RGB Shift
@@ -59,7 +62,10 @@ function createText(font) {
 	textMesh = new THREE.Mesh(textGeometry, mat);
 	textMesh.geometry.center();
 
-	composer.render();
+	if (USE_COMPOSER) {
+		composer.render();
+	}
+
 	renderer.clear();
 	renderer.render(scene, camera);
 
@@ -109,8 +115,11 @@ function animate(timestamp) {
 	// textMesh.rotation.x += 0.01 * Math.PI;
 	//terrain.object.rotation.z += 0.01 * Math.PI;
 
-	composer.render();
-	//renderer.render(scene, camera);
+	if (USE_COMPOSER) {
+		composer.render();
+	} else {
+		renderer.render(scene, camera);
+	}
 }
 
 window.addEventListener('resize', onWindowResize, false);
@@ -125,7 +134,11 @@ function onWindowResize() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	composer.setSize(window.innerWidth, window.innerHeight);
 
-	composer.render();
-	// renderer.setSize(window.innerWidth, window.innerHeight);
-	// renderer.render(scene, camera);
+
+	if (USE_COMPOSER) {
+		composer.render();
+	} else {
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.render(scene, camera);
+	}
 }
