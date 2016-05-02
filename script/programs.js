@@ -1,4 +1,4 @@
-[].forEach.call(document.querySelectorAll('#programs a.project-link'), (elem) => {
+[].forEach.call(document.querySelectorAll('a.project-link'), (elem) => {
 	elem.addEventListener('click', (event) => {
 		event.preventDefault();
 		glitch = true;
@@ -19,14 +19,14 @@ function showProject(name) {
 		var srcs = document.querySelectorAll('#container [src]');
 		for (var i = 0; i < srcs.length; i++) {
 			var url = srcs[i].getAttribute('src');
-			url = convertURL(url, 'https://raw.githubusercontent.com/BinaryBrain/Hz/master');
+			url = convertURL(url, 'https://raw.githubusercontent.com/BinaryBrain/' + name + '/master');
 			srcs[i].setAttribute('src', url);
 		}
 
 		var hrefs = document.querySelectorAll('#container [href]');
 		for (var i = 0; i < hrefs.length; i++) {
 			var url = hrefs[i].getAttribute('href');
-			url = convertURL(url, 'https://raw.githubusercontent.com/BinaryBrain/Hz/master');
+			url = convertURL(url, 'https://raw.githubusercontent.com/BinaryBrain/' + name + '/master');
 			hrefs[i].setAttribute('href', url);
 		}
 
