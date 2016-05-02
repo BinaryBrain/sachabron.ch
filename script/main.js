@@ -15,17 +15,18 @@ window.onload = function () {
 			}
 		}
 	}
+	
+	;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
+		elem.addEventListener('click', (event) => {
+			event.preventDefault();
+			glitch = true;
+
+			var pageName = elem.getAttribute('href').substring(1);
+			showPage(pageName);
+		})
+	})
 };
 
-;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
-	elem.addEventListener('click', (event) => {
-		event.preventDefault();
-		glitch = true;
-
-		var pageName = elem.getAttribute('href').substring(1);
-		showPage(pageName);
-	})
-})
 
 function showPage(pageName, changeTerrain) {
 	fetch('pages/' + pageName + '.html', { mode: 'cors' })  
