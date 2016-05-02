@@ -68,6 +68,20 @@ h3 {
 
 a {
 	color: white;
+
+	transition-property: transform;
+	transition-duration: 0.1s;
+	display: inline-block;
+	transform-origin: 0 100%;
+
+	&:hover {
+		transform: skew(-20deg);
+		text-shadow:
+		-1px 1px 0 black,
+		-1px 2px 0 black,
+		-2px 1px 0 black,
+		-2px 2px 0 black;
+	}
 }
 
 nav {
@@ -76,7 +90,7 @@ nav {
 	// font-family: 'PT Mono', monospace;
 	font-family: 'Geo', sans-serif;
 	// font-family: 'Quicksand', sans-serif;
-	font-size: 20px;
+	font-size: 22px;
 
 	.link {
 		float: left;
@@ -120,7 +134,6 @@ ul:not(.no-bullet), ol:not(.no-bullet) {
 
 @backgroundColor: #111111;
 
-
 .text {
 	// background: @backgroundColor;
 	// box-shadow: 10px 0 @backgroundColor;
@@ -141,13 +154,39 @@ pre, textarea, table {
 
 #container {
 	position: absolute;
+
 	right: -100px;
-	padding: 20px;
-	padding-right: 120px;
 	top: 50px;
 	bottom: 0;
 	left: 0;
+
+	padding: 20px;
+	padding-right: 120px;
+
 	overflow: auto;
+
+	& > * {
+		max-width: 1200px;
+	}
+}
+
+#whoami {
+	#me-photo {
+		@size: 150px;
+		background-image: url(photo.jpg);
+		background-size: cover;
+
+		float: right;
+		width: @size;
+		height: @size;
+		margin: 10px @size/2;
+		border-radius: @size/2;
+		border: 2px solid #eeeeee;
+
+		&:hover {
+			border: dashed;
+		}
+	}
 }
 
 #contact {

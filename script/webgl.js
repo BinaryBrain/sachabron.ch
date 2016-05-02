@@ -28,9 +28,6 @@ function setShiftColor(r, g, b, a, position) {
 	customShiftEffect.uniforms[position + 'A'].value = a;
 }
 
-// 44,34,86
-// 88,47,63
-
 customShiftEffect.renderToScreen = true;
 composer.addPass(customShiftEffect);
 
@@ -38,18 +35,11 @@ var pointLight = new THREE.PointLight(0xffffff, 1.5);
 pointLight.position.set(70, -200, 500);
 scene.add(pointLight);
 
-var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 10, 1);
-// scene.add(directionalLight);
-
-var hemiLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-// scene.add(hemiLight);
-
 var textGeometry, textMesh;
 
 var mat = new THREE.MultiMaterial([
-	new THREE.MeshPhongMaterial({ color: 0xffffff, shading: THREE.FlatShading }), // front
-	new THREE.MeshPhongMaterial({ color: 0xffffff, shading: THREE.SmoothShading }) // side
+	new THREE.MeshPhongMaterial({ color: 0xbbbbbb, shading: THREE.FlatShading }), // front
+	new THREE.MeshPhongMaterial({ color: 0xddbbee, shading: THREE.SmoothShading }) // side
 ]);
 
 // Terrain
@@ -123,7 +113,6 @@ function animate(timestamp) {
 
 		var max = 0.08;
 		customShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, max, -max, GLITCH_DURATION);
-		// customShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 		customShiftEffect.uniforms['angle'].value -= 0.2;
 	} else {
 		customShiftEffect.uniforms['amount'].value = 0;
@@ -143,10 +132,9 @@ function animate(timestamp) {
 		textMesh.rotation.y = Math.PI / 2;
 		// glitch = true;
 	}
-	//terrain.object.rotation.z += 0.01 * Math.PI;
 
-	// customShiftEffect.uniforms['amount'].value = 0.1;
-	// customShiftEffect.uniforms['angle'].value = 1;
+	terrain.object.rotation.z = Math.sin(timestamp / 10000) / 5;
+	terrain.object.rotation.x = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - Math.PI/2;
 
 	if (USE_COMPOSER) {
 		composer.render();
