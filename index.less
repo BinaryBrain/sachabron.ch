@@ -3,6 +3,7 @@
 @import url(font/Aileron/style.css);
 @import url(font/Brownie/brownie.css);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab|Bitter:400,400italic|Crete+Round:400,400italic);
+@import url(https://fonts.googleapis.com/css?family=Quicksand|Jura|Aldrich|Nixie+One|Geo);
 
 * {
 	margin: 0;
@@ -26,26 +27,33 @@ body {
 
 	font-family: 'Roboto Mono', monospace;
 	font-family: 'Droid Sans Mono', monospace;
-	font-family: 'Roboto Slab', serif;
-	font-family: 'Bitter', serif;
-	font-family: 'Crete Round', serif;
+	// font-family: 'Roboto Slab', serif;
+	// font-family: 'Bitter', serif;
+	// font-family: 'Crete Round', serif;
 	font-size: 16px;
 }
 
 h1, h2, h3 {
 	font-family: 'Aileron', sans;
-	font-family: 'Brownie', sans;
+	font-family: 'Quicksand', sans-serif;
+	font-family: 'Geo', sans-serif;
+
 	font-weight: 300;
 
 	.text {
-		padding-top: 10px;
-		padding-left: 10px;
+		padding: 10px;
 	}
 }
 
 h1 {
 	font-size: 50px;
 	margin-left: -10px;
+}
+
+article.entry-content {
+	h1:not(:first-child) {
+		margin-top: 30px;
+	}
 }
 
 h2 {
@@ -65,7 +73,10 @@ a {
 nav {
 	padding: 20px;
 
-	font-family: 'PT Mono', monospace;
+	// font-family: 'PT Mono', monospace;
+	font-family: 'Geo', sans-serif;
+	// font-family: 'Quicksand', sans-serif;
+	font-size: 20px;
 
 	.link {
 		float: left;
@@ -101,6 +112,10 @@ p {
 pre {
 	font-family: 'Droid Sans Mono', monospace;
 	border: 1px solid white;
+}
+
+ul:not(.no-bullet), ol:not(.no-bullet) {
+	padding-left: 30px;
 }
 
 @backgroundColor: #111111;
