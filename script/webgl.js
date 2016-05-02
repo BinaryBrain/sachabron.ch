@@ -1,4 +1,7 @@
 var USE_COMPOSER = true;
+var GLITCH_DURATION = 400;
+var TERRAIN_DURATION = 800;
+
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
@@ -56,7 +59,7 @@ terrain.object.position.z = -1000;
 terrain.object.rotation.x -= Math.PI/2;
 scene.add(terrain.object);
 
-terrain.applyNewHeightMap();
+// terrain.applyNewHeightMap();
 
 camera.position.x = 0;
 camera.position.y = -40;
@@ -79,7 +82,7 @@ function createText(font) {
 	textMesh.geometry.center();
 	textMesh.position.z = -3000;
 	textMesh.position.y = 1500;
-	textMesh.rotation.x = 0.4;
+	textMesh.rotation.x = 0.41;
 
 	if (USE_COMPOSER) {
 		composer.render();
@@ -90,6 +93,11 @@ function createText(font) {
 
 	scene.add(textMesh);
 
+	// Trick to start the animation on page load
+	setTimeout(function () {
+		terrain.changeHeightMap(TERRAIN_DURATION * 1.5);
+	}, 0);
+
 	animate();
 }
 
@@ -97,10 +105,8 @@ var changeTerrain = false;
 var glitch = false;
 var glitchTime;
 
-var glithDuration = 600;
-var terrainDuration = 800;
-
 function animate(timestamp) {
+
 	requestAnimationFrame(animate);
 
 	if (glitch) {
@@ -109,14 +115,14 @@ function animate(timestamp) {
 		customShiftEffect.uniforms['angle'].value = Math.PI/2;
 		customShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 	}
-	if (timestamp - glitchTime < glithDuration) {
+	if (timestamp - glitchTime < GLITCH_DURATION) {
 		// t: current time, b: begInnIng value, c: change In value, d: duration
 		function ease (x, t, b, c, d) {
 			return -c * ((t=t/d-1)*t*t*t - 1) + b;
 		}
 
 		var max = 0.08;
-		customShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, max, -max, glithDuration);
+		customShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, max, -max, GLITCH_DURATION);
 		// customShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 		customShiftEffect.uniforms['angle'].value -= 0.2;
 	} else {
@@ -125,7 +131,7 @@ function animate(timestamp) {
 	
 	if (changeTerrain) {
 		changeTerrain = false;
-		terrain.changeHeightMap(terrainDuration);
+		terrain.changeHeightMap(TERRAIN_DURATION);
 	}
 	
 	terrain.animate(timestamp);
