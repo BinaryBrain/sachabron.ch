@@ -11,10 +11,25 @@ document.body.appendChild(renderer.domElement);
 // RGB Shift
 var composer = new THREE.EffectComposer(renderer);
 composer.addPass(new THREE.RenderPass(scene, camera));
-var rgbShiftEffect = new THREE.ShaderPass(THREE.RGBShiftShader);
-rgbShiftEffect.uniforms['amount'].value = 0.0001;
-rgbShiftEffect.renderToScreen = true;
-composer.addPass(rgbShiftEffect);
+var customShiftEffect = new THREE.ShaderPass(THREE.CustomColorShift);
+customShiftEffect.uniforms['amount'].value = 0;
+
+setShiftColor(74, 54, 140, 0.1, 'left');
+setShiftColor(44, 170, 86, 1,'center');
+setShiftColor(150, 47, 63, 0.1, 'right');
+
+function setShiftColor(r, g, b, a, position) {
+	customShiftEffect.uniforms[position + 'R'].value = r / 255;
+	customShiftEffect.uniforms[position + 'G'].value = g / 255;
+	customShiftEffect.uniforms[position + 'B'].value = b / 255;
+	customShiftEffect.uniforms[position + 'A'].value = a;
+}
+
+// 44,34,86
+// 88,47,63
+
+customShiftEffect.renderToScreen = true;
+composer.addPass(customShiftEffect);
 
 var pointLight = new THREE.PointLight(0xffffff, 1.5);
 pointLight.position.set(70, -200, 500);
@@ -48,19 +63,23 @@ camera.position.y = -40;
 camera.position.z = 200;
 
 var loader = new THREE.FontLoader();
-loader.load('font/ostrich-sans-bold-regular.js', function (response) {
+// loader.load('font/ostrich-sans-bold-regular.js', function (response) {
+loader.load('font/geo-regular.js', function (response) {
 	createText(response);
 });
 
 function createText(font) {
 	textGeometry = new THREE.TextGeometry("Sacha Bron", {
 		font: font,
-		size: 20,
-		height: 10
+		size: 300,
+		height: 200
 	});
 
 	textMesh = new THREE.Mesh(textGeometry, mat);
 	textMesh.geometry.center();
+	textMesh.position.z = -3000;
+	textMesh.position.y = 1500;
+	textMesh.rotation.x = 0.4;
 
 	if (USE_COMPOSER) {
 		composer.render();
@@ -78,7 +97,7 @@ var changeTerrain = false;
 var glitch = false;
 var glitchTime;
 
-var glithDuration = 400;
+var glithDuration = 600;
 var terrainDuration = 800;
 
 function animate(timestamp) {
@@ -87,6 +106,8 @@ function animate(timestamp) {
 	if (glitch) {
 		glitchTime = timestamp;
 		glitch = false;
+		customShiftEffect.uniforms['angle'].value = Math.PI/2;
+		customShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
 	}
 	if (timestamp - glitchTime < glithDuration) {
 		// t: current time, b: begInnIng value, c: change In value, d: duration
@@ -94,15 +115,12 @@ function animate(timestamp) {
 			return -c * ((t=t/d-1)*t*t*t - 1) + b;
 		}
 
-		rgbShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, 0.05, -0.05, glithDuration);
-		rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
+		var max = 0.08;
+		customShiftEffect.uniforms['amount'].value = ease(0, timestamp - glitchTime, max, -max, glithDuration);
+		// customShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
+		customShiftEffect.uniforms['angle'].value -= 0.2;
 	} else {
-		if (Math.random() < 0.02) {
-			// rgbShiftEffect.uniforms['amount'].value = Math.random() * 0.02;
-			// rgbShiftEffect.uniforms['angle'].value = Math.random() * Math.PI * 2;
-		} else {
-			rgbShiftEffect.uniforms['amount'].value = 0;
-		}
+		customShiftEffect.uniforms['amount'].value = 0;
 	}
 	
 	if (changeTerrain) {
@@ -112,8 +130,17 @@ function animate(timestamp) {
 	
 	terrain.animate(timestamp);
 
-	// textMesh.rotation.x += 0.01 * Math.PI;
+	textMesh.rotation.x -= 0.0 * Math.PI;
+	textMesh.rotation.y -= 0.01 * Math.PI;
+	
+	if (textMesh.rotation.y < -Math.PI / 2) {
+		textMesh.rotation.y = Math.PI / 2;
+		// glitch = true;
+	}
 	//terrain.object.rotation.z += 0.01 * Math.PI;
+
+	// customShiftEffect.uniforms['amount'].value = 0.1;
+	// customShiftEffect.uniforms['angle'].value = 1;
 
 	if (USE_COMPOSER) {
 		composer.render();
@@ -133,7 +160,6 @@ function onWindowResize() {
 	
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	composer.setSize(window.innerWidth, window.innerHeight);
-
 
 	if (USE_COMPOSER) {
 		composer.render();
