@@ -1,31 +1,51 @@
-document.addEventListener("load", function () {
-	addSpans()
-})
+window.onload = function () {
+	// alert(1); // FIXME makes terrain not
 
-// TODO Move this to main.js
+	var parts = window.location.href.split("#!/");
+	
+	if (parts.length > 1) {
+		var path = parts[1];
+		var folders = path.split("/");
+
+		if (folders.length === 1) {
+			showPage(folders[0], false);
+		} else {
+			if (folders[0] === 'programs' || folders[0] === 'web') {
+				showProject(folders[1], false);
+			}
+		}
+	}
+};
+
 ;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
 	elem.addEventListener('click', (event) => {
 		event.preventDefault();
 		glitch = true;
 
 		var pageName = elem.getAttribute('href').substring(1);
-
-		fetch('pages/' + pageName + '.html', { mode: 'cors' })  
-		.then(function(response) {
-			return response.text();
-		})
-		.then(function(text) {
-			changeTerrain = true;
-
-			history.replaceState('rewrite', '', '#!/' + pageName);
-			document.querySelector('#container').innerHTML = text;
-			addSpans();
-		})
-		.catch(function(error) {
-			console.error('Request failed', error)
-		})
+		showPage(pageName);
 	})
 })
+
+function showPage(pageName, changeTerrain) {
+	fetch('pages/' + pageName + '.html', { mode: 'cors' })  
+	.then(function(response) {
+		return response.text();
+	})
+	.then(function(text) {
+		if (typeof changeTerrain === 'undefined') {
+			changeTerrain = true;
+		}
+
+		history.replaceState('rewrite', '', '#!/' + pageName);
+		document.querySelector('#container').innerHTML = text;
+		addSpans();
+		addLinksEvents();
+	})
+	.catch(function(error) {
+		console.error('Request failed', error);
+	})
+}
 
 /**
   * This function will surround every single text node in the DOM with some <span class="text"></span>
@@ -50,7 +70,7 @@ function addSpans() {
 					span.appendChild(newTextNode);
 				}
 			} else {
-				dfs(nodes[i].childNodes)
+				dfs(nodes[i].childNodes);
 			}
 		}
 	}

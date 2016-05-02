@@ -1,18 +1,22 @@
-[].forEach.call(document.querySelectorAll('a.project-link'), (elem) => {
-	elem.addEventListener('click', (event) => {
-		event.preventDefault();
-		glitch = true;
+function addLinksEvents() {
+	;[].forEach.call(document.querySelectorAll('a.project-link'), (elem) => {
+		elem.addEventListener('click', (event) => {
+			event.preventDefault();
+			glitch = true;
 
-		var pageName = elem.getAttribute('href').substring(1);
-		history.replaceState('rewrite', '', '#!/programs/' + pageName);
+			var pageName = elem.getAttribute('href').substring(1);
+			history.replaceState('rewrite', '', '#!/programs/' + pageName);
 
-		showProject(pageName);
+			showProject(pageName);
+		})
 	})
-})
+}
 
-function showProject(name) {
+function showProject(name, changeTerrain) {
 	getReadme(name, function (html) {
-		changeTerrain = true;
+		if (typeof changeTerrain === 'undefined') {
+			changeTerrain = true;
+		}
 
 		document.querySelector('#container').innerHTML = html;
 
