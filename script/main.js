@@ -1,6 +1,14 @@
+// window.addEventListener("hashchange", function () {
+// 	onPageLoad();
+// })
+
 window.onload = function () {
 	// alert(1); // FIXME makes terrain not
 
+	onPageLoad();
+}
+
+function onPageLoad() {
 	var parts = window.location.href.split("#!/");
 	
 	if (parts.length > 1) {
@@ -28,17 +36,19 @@ window.onload = function () {
 };
 
 
-function showPage(pageName, changeTerrain) {
+function showPage(pageName, shouldChangeTerrain) {
 	fetch('pages/' + pageName + '.html', { mode: 'cors' })  
 	.then(function(response) {
 		return response.text();
 	})
 	.then(function(text) {
-		if (typeof changeTerrain === 'undefined') {
+		if (typeof shouldChangeTerrain !== 'undefined') {
+			changeTerrain = shouldChangeTerrain;
+		} else {
 			changeTerrain = true;
 		}
 
-		history.replaceState('rewrite', '', '#!/' + pageName);
+		history.pushState('rewrite', '', '#!/' + pageName);
 		document.querySelector('#container').innerHTML = text;
 		addSpans();
 		addLinksEvents();

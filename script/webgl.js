@@ -119,19 +119,20 @@ function animate(timestamp) {
 	}
 	
 	if (changeTerrain) {
+		console.log("CHANGE");
 		changeTerrain = false;
 		terrain.changeHeightMap(TERRAIN_DURATION);
 	}
 	
 	terrain.animate(timestamp);
 
-	textMesh.rotation.x -= 0.0 * Math.PI;
-	textMesh.rotation.y -= 0.01 * Math.PI;
-	
-	if (textMesh.rotation.y < -Math.PI / 2) {
-		textMesh.rotation.y = Math.PI / 2;
-		// glitch = true;
-	}
+	// textMesh.rotation.x -= 0.0 * Math.PI;
+	// textMesh.rotation.y -= 0.01 * Math.PI;
+	// 
+	// if (textMesh.rotation.y < -Math.PI / 2) {
+	// 	textMesh.rotation.y = Math.PI / 2;
+	// 	// glitch = true;
+	// }
 
 	terrain.object.rotation.z = Math.sin(timestamp / 10000) / 5;
 	terrain.object.rotation.x = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - Math.PI/2;
