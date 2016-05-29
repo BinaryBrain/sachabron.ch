@@ -116,7 +116,6 @@ function initWebGL() {
 		}
 
 		if (changeTerrain) {
-			console.log("CHANGE");
 			changeTerrain = false;
 			terrain.changeHeightMap(TERRAIN_DURATION);
 		}
