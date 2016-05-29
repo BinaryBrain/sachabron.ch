@@ -69,6 +69,7 @@ function showPage(pageName, shouldChangeTerrain) {
   * The purpose is to be able to apply a nice background to the text without having a background on blocks.
   */
 function addSpans() {
+	/*
 	var container = document.querySelector('#container');
 	dfs(container.childNodes);
 
@@ -108,6 +109,7 @@ function addSpans() {
 
 		container.appendChild(newScript);
 	}
+	*/
 }
 
 function isInline(elem) {
