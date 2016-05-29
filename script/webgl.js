@@ -54,7 +54,9 @@ function initWebGL() {
 	terrain.object.rotation.x -= Math.PI/2;
 	scene.add(terrain.object);
 
-	// terrain.applyNewHeightMap();
+	camera.position.x = 0;
+	camera.position.y = -40;
+	camera.position.z = 200;
 
 	var loader = new THREE.FontLoader();
 	// loader.load('font/ostrich-sans-bold-regular.js', function (response) {
@@ -137,6 +139,8 @@ function initWebGL() {
 				camera.position.y = -radius * Math.sin(cameraAngleX) + 100;
 				camera.position.z = radius * Math.cos(cameraAngleX) * Math.cos(cameraAngleY) - 200;
 			*/
+		} else {
+			fadeOutText = true;
 		}
 
 		if (USE_COMPOSER) {
