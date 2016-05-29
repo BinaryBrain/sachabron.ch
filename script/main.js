@@ -3,14 +3,12 @@
 // })
 
 window.onload = function () {
-	// alert(1); // FIXME makes terrain not
-
 	onPageLoad();
 }
 
 function onPageLoad() {
 	var parts = window.location.href.split("#!/");
-	
+
 	if (parts.length > 1) {
 		var path = parts[1];
 		var folders = path.split("/");
@@ -23,7 +21,7 @@ function onPageLoad() {
 			}
 		}
 	}
-	
+
 	;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
 		elem.addEventListener('click', (event) => {
 			event.preventDefault();
@@ -34,6 +32,8 @@ function onPageLoad() {
 			showPage(pageName);
 		})
 	})
+
+	initWebGL();
 };
 
 
