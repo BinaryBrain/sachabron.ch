@@ -42,7 +42,7 @@ var mat = new THREE.MultiMaterial([
 ]);
 
 // Terrain
-var terrain = new Terrain(2000, 6, 500, 10);
+var terrain = new Terrain(2000, 5, 500, 10);
 terrain.object.position.y = -300;
 terrain.object.position.z = -1000;
 terrain.object.rotation.x -= Math.PI/2;
@@ -91,7 +91,6 @@ var glitch = false;
 var glitchTime;
 
 function animate(timestamp) {
-
 	requestAnimationFrame(animate);
 
 	if (glitch) {
@@ -120,6 +119,7 @@ function animate(timestamp) {
 	}
 	
 	terrain.animate(timestamp);
+	fadeOutTextAnimate(timestamp);
 
 	var cameraAngleX = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - 0.1;
 	var cameraAngleY = Math.sin(timestamp / 10000) / 5;
@@ -136,6 +136,16 @@ function animate(timestamp) {
 		composer.render();
 	} else {
 		renderer.render(scene, camera);
+	}
+}
+
+var fadeOutText = false
+
+function fadeOutTextAnimate(timestamp) {
+	if (fadeOutText) {
+		textMesh.position.z -= 100;
+		textMesh.position.y *= 1.05;
+		textMesh.rotation.x += 0.2;
 	}
 }
 

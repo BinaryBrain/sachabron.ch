@@ -28,6 +28,7 @@ function onPageLoad() {
 		elem.addEventListener('click', (event) => {
 			event.preventDefault();
 			glitch = true;
+			fadeOutText = true;
 
 			var pageName = elem.getAttribute('href').substring(1);
 			showPage(pageName);
