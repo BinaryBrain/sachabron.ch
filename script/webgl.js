@@ -2,9 +2,8 @@ var USE_COMPOSER = true;
 var GLITCH_DURATION = 400;
 var TERRAIN_DURATION = 800;
 
-
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -51,10 +50,6 @@ scene.add(terrain.object);
 
 // terrain.applyNewHeightMap();
 
-camera.position.x = 0;
-camera.position.y = -40;
-camera.position.z = 200;
-
 var loader = new THREE.FontLoader();
 // loader.load('font/ostrich-sans-bold-regular.js', function (response) {
 loader.load('font/geo-regular.js', function (response) {
@@ -64,15 +59,15 @@ loader.load('font/geo-regular.js', function (response) {
 function createText(font) {
 	textGeometry = new THREE.TextGeometry("Sacha Bron", {
 		font: font,
-		size: 300,
-		height: 200
+		size: 200,
+		height: 120
 	});
 
 	textMesh = new THREE.Mesh(textGeometry, mat);
 	textMesh.geometry.center();
-	textMesh.position.z = -3000;
-	textMesh.position.y = 1500;
-	textMesh.rotation.x = 0.41;
+	textMesh.position.z = -2000;
+	textMesh.position.y = 800;
+	textMesh.rotation.x = 0;
 
 	if (USE_COMPOSER) {
 		composer.render();
@@ -126,16 +121,16 @@ function animate(timestamp) {
 	
 	terrain.animate(timestamp);
 
-	// textMesh.rotation.x -= 0.0 * Math.PI;
-	// textMesh.rotation.y -= 0.01 * Math.PI;
-	// 
-	// if (textMesh.rotation.y < -Math.PI / 2) {
-	// 	textMesh.rotation.y = Math.PI / 2;
-	// 	// glitch = true;
-	// }
+	var cameraAngleX = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - 0.1;
+	var cameraAngleY = Math.sin(timestamp / 10000) / 5;
+	var radius = 700;
+	
+	camera.rotation.x = cameraAngleX;
+	camera.rotation.y = cameraAngleY;
 
-	terrain.object.rotation.z = Math.sin(timestamp / 10000) / 5;
-	terrain.object.rotation.x = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - Math.PI/2;
+	camera.position.x = radius * Math.cos(cameraAngleX) * Math.sin(cameraAngleY);
+	camera.position.y = -radius * Math.sin(cameraAngleX) + 100;
+	camera.position.z = radius * Math.cos(cameraAngleX) * Math.cos(cameraAngleY) - 200;
 
 	if (USE_COMPOSER) {
 		composer.render();
