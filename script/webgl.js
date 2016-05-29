@@ -1,6 +1,7 @@
 var fadeOutText = false
 var changeTerrain = false;
 var glitch = false;
+var isHome = false;
 
 function initWebGL() {
 	var USE_COMPOSER = true;
@@ -123,16 +124,20 @@ function initWebGL() {
 		terrain.animate(timestamp);
 		fadeOutTextAnimate(timestamp);
 
-		var cameraAngleX = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - 0.1;
-		var cameraAngleY = Math.sin(timestamp / 10000) / 5;
-		var radius = 700;
+		if (isHome) {
 
-		camera.rotation.x = cameraAngleX;
-		camera.rotation.y = cameraAngleY;
+			/*
+				var cameraAngleX = Math.pow(Math.sin(timestamp / 11000) / 2, 4) - 0.1;
+				var cameraAngleY = Math.sin(timestamp / 10000) / 5;
+				var radius = 700;
 
-		camera.position.x = radius * Math.cos(cameraAngleX) * Math.sin(cameraAngleY);
-		camera.position.y = -radius * Math.sin(cameraAngleX) + 100;
-		camera.position.z = radius * Math.cos(cameraAngleX) * Math.cos(cameraAngleY) - 200;
+				camera.rotation.x = cameraAngleX;
+				camera.rotation.y = cameraAngleY;
+				camera.position.x = radius * Math.cos(cameraAngleX) * Math.sin(cameraAngleY);
+				camera.position.y = -radius * Math.sin(cameraAngleX) + 100;
+				camera.position.z = radius * Math.cos(cameraAngleX) * Math.cos(cameraAngleY) - 200;
+			*/
+		}
 
 		if (USE_COMPOSER) {
 			composer.render();

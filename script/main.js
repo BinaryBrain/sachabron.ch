@@ -10,6 +10,8 @@ function onPageLoad() {
 	var parts = window.location.href.split("#!/");
 
 	if (parts.length > 1) {
+		isHome = false;
+
 		var path = parts[1];
 		var folders = path.split("/");
 
@@ -20,6 +22,8 @@ function onPageLoad() {
 				showProject(folders[1], false);
 			}
 		}
+	} else {
+		isHome = true;
 	}
 
 	;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
@@ -27,6 +31,7 @@ function onPageLoad() {
 			event.preventDefault();
 			glitch = true;
 			fadeOutText = true;
+			isHome = false;
 
 			var pageName = elem.getAttribute('href').substring(1);
 			showPage(pageName);
