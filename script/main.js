@@ -27,7 +27,7 @@ function onPageLoad() {
 	}
 
 	;[].forEach.call(document.querySelectorAll('nav a'), function (elem) {
-		elem.addEventListener('click', (event) => {
+		elem.addEventListener('click', function (event) {
 			event.preventDefault();
 			glitch = true;
 			fadeOutText = true;
