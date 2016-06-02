@@ -26,7 +26,7 @@ function onPageLoad() {
 		isHome = true;
 	}
 
-	;[].forEach.call(document.querySelectorAll('nav a'), (elem) => {
+	;[].forEach.call(document.querySelectorAll('nav a'), function (elem) {
 		elem.addEventListener('click', (event) => {
 			event.preventDefault();
 			glitch = true;

@@ -1,5 +1,5 @@
 function addLinksEvents() {
-	;[].forEach.call(document.querySelectorAll('a.project-link'), (elem) => {
+	;[].forEach.call(document.querySelectorAll('a.project-link'), function (elem) {
 		elem.addEventListener('click', (event) => {
 			event.preventDefault();
 			glitch = true;
