@@ -28,15 +28,25 @@ function onPageLoad() {
 
 	;[].forEach.call(document.querySelectorAll('nav a'), function (elem) {
 		elem.addEventListener('click', function (event) {
-			event.preventDefault();
-			glitch = true;
-			fadeOutText = true;
-			isHome = false;
+			var href = elem.getAttribute('href');
+			console.log(href, href.charAt(0))
+			if (href.charAt(0) === '#') {
+				event.preventDefault();
+				glitch = true;
+				fadeOutText = true;
+				isHome = false;
 
-			var pageName = elem.getAttribute('href').substring(1);
-			showPage(pageName);
+				var pageName = href.substring(1);
+				showPage(pageName);
+			}
 		})
 	})
+
+	document.querySelector('.link.refresh').addEventListener('click', function (event) {
+		event.preventDefault();
+		glitch = true;
+		changeTerrain = true;
+	});
 
 	initWebGL();
 };

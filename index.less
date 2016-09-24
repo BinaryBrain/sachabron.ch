@@ -85,7 +85,7 @@ a {
 	display: inline-block;
 	transform-origin: 0 100%;
 
-	&:hover {
+	&:hover:not(.no-tilt) {
 		transform: skew(-20deg);
 		text-shadow:
 		-1px 1px 0 black,
@@ -109,7 +109,17 @@ nav {
 
 	.link {
 		float: left;
-		margin-right: 50px;
+		margin-right: 50px;		
+
+		&.right {
+			float: right;
+			margin-right: 0;
+			margin-left: 50px;
+		}
+
+		&.refresh {
+			cursor: pointer;
+		}
 
 		a {
 			color: white;
