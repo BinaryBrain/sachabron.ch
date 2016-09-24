@@ -29,7 +29,7 @@ function onPageLoad() {
 	;[].forEach.call(document.querySelectorAll('nav a'), function (elem) {
 		elem.addEventListener('click', function (event) {
 			var href = elem.getAttribute('href');
-			console.log(href, href.charAt(0))
+
 			if (href.charAt(0) === '#') {
 				event.preventDefault();
 				glitch = true;
@@ -38,6 +38,13 @@ function onPageLoad() {
 
 				var pageName = href.substring(1);
 				showPage(pageName);
+			} else if (href === '/') {
+				event.preventDefault();
+				fadeOutText = false;
+				isHome = true;
+				glitch = true;
+				changeTerrain = true;
+				document.querySelector('#container').innerHTML = '';
 			}
 		})
 	})

@@ -1,4 +1,4 @@
-var fadeOutText = false
+var fadeOutText = false;
 var changeTerrain = false;
 var glitch = false;
 var isHome = false;
@@ -156,6 +156,10 @@ function initWebGL() {
 			textMesh.position.z -= 100;
 			textMesh.position.y *= 1.05;
 			textMesh.rotation.x += 0.2;
+		} else {
+			textMesh.position.z = -2000;
+			textMesh.position.y = 800;
+			textMesh.rotation.x = 0;
 		}
 	}
 
