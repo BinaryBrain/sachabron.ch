@@ -49,6 +49,7 @@ function initWebGL() {
 
 	// Terrain
 	var terrain = new Terrain(2000, 5, 500, 10);
+	terrain.object.position.x = 30;
 	terrain.object.position.y = -300;
 	terrain.object.position.z = -1000;
 	terrain.object.rotation.x -= Math.PI/2;
