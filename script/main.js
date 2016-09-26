@@ -45,6 +45,7 @@ function onPageLoad() {
 				glitch = true;
 				changeTerrain = true;
 				document.querySelector('#container').innerHTML = '';
+				history.pushState('rewrite', '', '/');
 			}
 		})
 	})
