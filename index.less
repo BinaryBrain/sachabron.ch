@@ -69,6 +69,11 @@ h3 {
 	margin-top: 20px;
 }
 
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
 // :not([href$=svg?raw\=true])
 
 #readme {
@@ -214,6 +219,91 @@ pre, textarea, table {
 	}
 }
 
+#photos {
+	.thumbnails {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		width: 100%;
+		padding-top: 20px;
+
+		.thumbnail {
+			flex-direction: row;
+			height: 300px;
+			margin: 20px 9px;
+		}
+	}
+}
+
+#fullscreen-photo {
+	display: none;
+
+	position: absolute;
+	
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+
+	background-color: rgba(0, 0, 0, 1);
+
+	figure {
+		position: absolute;
+		margin: 50px;
+
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		div {
+			img {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				z-index: -50;
+			}
+		}
+
+		figcaption {
+			position: absolute;
+			bottom: -44px;
+			margin: 10px 0;
+		}
+
+		.prev, .next {
+			display: none;
+			position: absolute;
+			bottom: 50%;
+			cursor: pointer;
+			font-size: 50px;
+			color: #444444;
+
+			&:hover {
+				color: white;
+			}
+		}
+
+		.prev {
+			left: -40px;
+
+			&:after {
+				content: '<';
+			}
+		}
+
+		.next {
+			right: -40px;
+
+			&:after {
+				content: '>';
+			}
+		}
+	}
+}
+
 #contact {
 	li {
 		line-height: 35px;
@@ -236,4 +326,8 @@ pre, textarea, table {
 
 ::selection {
 	background-color: rgba(10, 10, 10, 0.99);
+}
+
+img::selection {
+	background-color: rgba(10, 10, 10, 0.01);
 }
