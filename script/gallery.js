@@ -1,71 +1,159 @@
-var isFullscreen = false;
+var Gallery = {}
 
-document.addEventListener("fullscreenchange", function (event) {
-	if (isFullscreen) {
-		quitFullscreen();
-	} else {
-		isFullscreen = true;
+function initGallery() {
+	Gallery = {
+		isFullscreen: false,
+		waitForFullscreen: false,
+		fullscreenContainer: document.querySelector('#fullscreen-photo'),
+		fullscreenPhoto:  document.querySelector('#fullscreen-current-photo'),
+		prevBtn: document.querySelector('#fullscreen-photo .prev'),
+		nextBtn: document.querySelector('#fullscreen-photo .next'),
+		caption: document.querySelector('#fullscreen-photo figcaption'),
+		close: document.querySelector('#fullscreen-photo .close'),
+		thumbnails: document.querySelectorAll('#photos .thumbnail'),
+		thumbnailsSrc: [],
+		photosSrc: [],
+		altTextes: [],
+		currentIndex: 0,
+		size: 0,
 	}
-});
 
-document.addEventListener("webkitfullscreenchange", function (event) {
-	if (isFullscreen) {
-		quitFullscreen();
-	} else {
-		isFullscreen = true;
-	}
-});
+	;[].forEach.call(Gallery.thumbnails, function (thumb) {
+		Gallery.thumbnailsSrc.push(thumb.src);
+		Gallery.photosSrc.push(thumbToPhoto(thumb.src));
+		Gallery.altTextes.push(thumb.alt);
+		Gallery.size++;
+	});
 
-document.addEventListener("mozfullscreenchange", function (event) {
-	if (isFullscreen) {
-		quitFullscreen();
-	} else {
-		isFullscreen = true;
-	}
-});
+	addEvents();
+}
 
-document.addEventListener("msfullscreenchange", function (event) {
-	if (isFullscreen) {
-		quitFullscreen();
-	} else {
-		isFullscreen = true;
-	}
-});
-
-function addThumbnailsEvents() {
-	;[].forEach.call(document.querySelectorAll('#photos .thumbnail'), function (elem) {
+function addEvents() {
+	;[].forEach.call(Gallery.thumbnails, function (elem) {
 		elem.addEventListener('click', function (event) {
 			event.preventDefault();
 			showPhoto(elem);
 		})
+	});
+
+	document.addEventListener('fullscreenchange', function (event) {
+		if (Gallery.isFullscreen && !Gallery.waitForFullscreen) {
+			quitFullscreen();
+		} else if (Gallery.waitForFullscreen) {
+			Gallery.waitForFullscreen = false;
+		}
+	});
+
+	document.addEventListener('webkitfullscreenchange', function (event) {
+		if (Gallery.isFullscreen && !Gallery.waitForFullscreen) {
+			quitFullscreen();
+		} else if (Gallery.waitForFullscreen) {
+			Gallery.waitForFullscreen = false;
+		}
+	});
+
+	document.addEventListener('mozfullscreenchange', function (event) {
+		if (Gallery.isFullscreen && !Gallery.waitForFullscreen) {
+			quitFullscreen();
+		} else if (Gallery.waitForFullscreen) {
+			Gallery.waitForFullscreen = false;
+		}
+	});
+
+	document.addEventListener('msfullscreenchange', function (event) {
+		if (Gallery.isFullscreen && !Gallery.waitForFullscreen) {
+			quitFullscreen();
+		} else if (Gallery.waitForFullscreen) {
+			Gallery.waitForFullscreen = false;
+		}
+	});
+
+	document.addEventListener('keydown', function (event) {
+		var key = event.which || event.keyCode || 0;
+		if (key === 37) {
+			prev();
+		} else if (key === 39) {
+			next();
+		}
 	})
+
+	Gallery.prevBtn.addEventListener('click', function (event) {
+		prev();
+	});
+
+	Gallery.nextBtn.addEventListener('click', function (event) {
+		next();
+	});
+
+	Gallery.close.addEventListener('click', function (event) {
+		quitFullscreen();
+	});
 }
 
-function showPhoto(name) {
-	var parts = name.src.split('/');
+function thumbToPhoto(path) {
+	var parts = path.split('/');
 	parts.splice(parts.length - 2, 1);
-	var newSource = parts.join('/');
+	return parts.join('/');
+}
 
-	document.querySelector('#fullscreen-current-photo').src = newSource;
+function showPhoto(img) {
+	var newSource = thumbToPhoto(img.src);
 
-	// TODO set photo
+	Gallery.fullscreenPhoto.src = newSource;
+	document.querySelector('#fullscreen-photo figcaption').textContent = img.alt;
+
+	Gallery.currentIndex = Gallery.thumbnailsSrc.indexOf(img.src);
+
+	updateBtnDisplay();
 
 	setFullscreen();
 }
 
 function setFullscreen() {
-	FULLSCREEN_PHOTO_ELEM.style.display = "block";
-	
-	runPrefixMethod(FULLSCREEN_PHOTO_ELEM, "RequestFullScreen");
+	Gallery.waitForFullscreen = true;
+	Gallery.isFullscreen = true;
+	Gallery.fullscreenContainer.style.display = "block";
+
+	runPrefixMethod(Gallery.fullscreenContainer, "RequestFullScreen");
 }
 
 function quitFullscreen() {
-	console.log("quitFullscreen", isFullscreen)
-	FULLSCREEN_PHOTO_ELEM.style.display = "none";
+	Gallery.fullscreenContainer.style.display = "none";
+	Gallery.isFullscreen = false;
+	Gallery.waitForFullscreen = false;
+	Gallery.fullscreenPhoto.src = "";
 
-	isFullscreen = false;
+	runPrefixMethod(document, "ExitFullscreen");
+	runPrefixMethod(document, "CancelFullScreen");
+}
 
-	document.querySelector('#fullscreen-current-photo').src = "";
+function prev() {
+	if (Gallery.currentIndex <= 0) {
+		return;
+	}
+
+	Gallery.fullscreenPhoto.src = Gallery.photosSrc[Gallery.currentIndex - 1];
+	Gallery.currentIndex--;
+	Gallery.caption.innerText = Gallery.altTextes[Gallery.currentIndex];
+
+	updateBtnDisplay();
+}
+
+function next() {
+	if (Gallery.currentIndex >= Gallery.size - 1) {
+		return;
+	}
+
+	Gallery.fullscreenPhoto.src = Gallery.photosSrc[Gallery.currentIndex + 1];
+	Gallery.currentIndex++;
+	Gallery.caption.innerText = Gallery.altTextes[Gallery.currentIndex];
+
+	updateBtnDisplay();
+}
+
+function updateBtnDisplay() {
+	Gallery.prevBtn.style.display = (Gallery.currentIndex > 0) ? "block" : "none";
+	Gallery.nextBtn.style.display = (Gallery.currentIndex < Gallery.size - 1) ? "block" : "none";
 }
 
 function runPrefixMethod(obj, method) {

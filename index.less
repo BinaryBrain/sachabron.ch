@@ -231,6 +231,7 @@ pre, textarea, table {
 			flex-direction: row;
 			height: 300px;
 			margin: 20px 9px;
+			cursor: pointer;
 		}
 	}
 }
@@ -247,6 +248,15 @@ pre, textarea, table {
 	z-index: 100;
 
 	background-color: rgba(0, 0, 0, 1);
+
+	.close {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		font-size: 50px;
+		line-height: 19px;
+		cursor: pointer;
+	}
 
 	figure {
 		position: absolute;
@@ -274,7 +284,6 @@ pre, textarea, table {
 		}
 
 		.prev, .next {
-			display: none;
 			position: absolute;
 			bottom: 50%;
 			cursor: pointer;

@@ -1,15 +1,12 @@
 // window.addEventListener("hashchange", function () {
 // 	onPageLoad();
 // })
-var FULLSCREEN_PHOTO_ELEM;
 
 window.onload = function () {
 	onPageLoad();
 }
 
 function onPageLoad() {
-	FULLSCREEN_PHOTO_ELEM = document.querySelector('#fullscreen-photo');
-
 	var parts = window.location.href.split("#!/");
 
 	if (parts.length > 1) {
@@ -79,7 +76,7 @@ function showPage(pageName, shouldChangeTerrain) {
 		document.querySelector('#container').innerHTML = text;
 		addSpans();
 		addLinksEvents();
-		addThumbnailsEvents();
+		initGallery();
 	})
 	.catch(function(error) {
 		console.error('Request failed', error);
