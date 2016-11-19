@@ -16,6 +16,7 @@ function initGallery() {
 		altTextes: [],
 		currentIndex: 0,
 		size: 0,
+		hideCursorInterval: null,
 	}
 
 	;[].forEach.call(Gallery.thumbnails, function (thumb) {
@@ -88,6 +89,8 @@ function addEvents() {
 	Gallery.close.addEventListener('click', function (event) {
 		quitFullscreen();
 	});
+
+	Gallery.fullscreenContainer.addEventListener("mousemove", showCursor);
 }
 
 function thumbToPhoto(path) {
@@ -115,6 +118,8 @@ function setFullscreen() {
 	Gallery.fullscreenContainer.style.display = "block";
 
 	runPrefixMethod(Gallery.fullscreenContainer, "RequestFullScreen");
+
+	showCursor();
 }
 
 function quitFullscreen() {
@@ -173,4 +178,17 @@ function runPrefixMethod(obj, method) {
 		}
 		p++;
 	}
+}
+
+function hideCursor() {
+	clearInterval(Gallery.hideCursorInterval);
+	Gallery.fullscreenContainer.style.cursor = 'none';
+}
+
+function showCursor() {
+	Gallery.fullscreenContainer.style.cursor = '';
+	Gallery.lastMouseMove = (new Date()).getTime();
+
+	clearInterval(Gallery.hideCursorInterval);
+	Gallery.hideCursorInterval = setInterval(hideCursor, 1000);
 }
