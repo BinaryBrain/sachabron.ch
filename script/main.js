@@ -76,7 +76,7 @@ function showPage(pageName, shouldChangeTerrain) {
 		document.querySelector('#container').innerHTML = text;
 		addSpans();
 		addLinksEvents();
-		initGallery();
+		initGallery(); // FIXME shouldn't be called multiple times
 	})
 	.catch(function(error) {
 		console.error('Request failed', error);
