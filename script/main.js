@@ -1,3 +1,4 @@
+/*
 window.onload = function () {
 	onPageLoad();
 }
@@ -13,10 +14,15 @@ function onPageLoad() {
 
 	initWebGL();
 };
+*/
 
 var app = new Vue({
 	el: '#app',
 	data: {
 		message: 'Hello Vue!'
+	},
+	mounted: function () {
+		console.log(123);
+		initWebGL();
 	}
 })
