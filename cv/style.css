@@ -27,14 +27,6 @@ h2 {
 	font-style: italic;
 }
 
-table {
-
-}
-
-tr {
-
-}
-
 th, td {
 	padding: 8px 10px;
 	vertical-align: top;
@@ -43,7 +35,7 @@ th, td {
 th {
 	text-align: right;
 	/*white-space: nowrap;*/
-	width: 88px;
+	width: 120px;
 }
 
 td {
@@ -88,7 +80,6 @@ small {
 
 	#content {
 		margin: 18mm;
-		margin-bottom: 0px;
 		height: 259mm;
 		width: 164mm; /* 210mm × 297mm */
 	}
@@ -133,6 +124,9 @@ small {
 
 	section {
 		padding-top: 15px;
+	}
+
+	tr {
 		page-break-inside: avoid;
 	}
 }
